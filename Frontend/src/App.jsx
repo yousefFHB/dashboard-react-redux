@@ -8,7 +8,8 @@ export default function App() {
     <>
     <RouterProvider router={router}/>
 
-    <Toaster/>
+    <Toaster toastOptions={{
+    className: "",}}/>
       
     </>
   )

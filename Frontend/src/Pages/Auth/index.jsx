@@ -35,35 +35,49 @@ export default function Auth() {
 
     if (result.success && isAllowedRole) {
       dispatch(login(result.data));
-      notify("success", result.message);
+      notify("success", "با موفقیت وارد شدید");
       navigate("/dashboard");
     } else {
       if (result.success && !isAllowedRole) {
-        result.message = "You don't have permission to access the dashboard";
+        result.message = "اجازه دسترسی به داشبرد را ندارید";
       }
 
       setFields({ email: "", password: "" });
-      notify("error", result.message);
+      notify("error", "ایمیل و رمز عبور را وارد کنید");
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 px-4">
+    <div className="min-h-screen font-sans flex items-center justify-center login-bg px-4">
       <div className="w-full max-w-md">
-        <div className="relative overflow-hidden rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-xl">
-          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-indigo-500 to-cyan-500" />
+        <div
+          className="
+        relative overflow-hidden rounded-2xl
+        bg-white/5
+        backdrop-blur-2xl
+        border border-white/20
+        shadow-2xl shadow-black/30
+      "
+        >
+          {/* subtle glass highlight */}
+          <div className="absolute inset-0 bg-linear-to-br from-white/20 to-transparent pointer-events-none" />
 
-          <div className="px-6 pt-8 pb-5">
-            <h1 className="text-2xl font-extrabold text-slate-800 dark:text-white">Admin Login</h1>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Secure access to dashboard</p>
+          <div className="relative px-6 pt-8 pb-5">
+            <h1 className="text-2xl font-extrabold text-white">
+              صفحه ورود
+            </h1>
+            <p className="mt-1 text-sm text-white/80">
+              دسترسی محدود به داشبرد
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="relative px-6 pb-6 space-y-5">
+            {/* Email */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-400 mb-1">
-                Email
+              <label className="block text-xs font-semibold uppercase tracking-wide text-white/90 mb-2">
+                ایمیل
               </label>
               <input
                 type="email"
@@ -72,20 +86,23 @@ export default function Auth() {
                 onChange={handleChange}
                 placeholder="admin@example.com"
                 className="
-                  w-full rounded-xl px-4 py-3 text-sm
-                  bg-slate-100 dark:bg-slate-800
-                  border border-slate-200 dark:border-slate-700
-                  text-slate-800 dark:text-white
-                  placeholder:text-slate-400
-                  outline-none transition
-                  focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500
-                "
+              w-full rounded-xl px-4 py-3 text-sm
+              bg-slate-900/50
+              border border-white/30
+              text-white
+              placeholder:text-white/60
+              backdrop-blur-md
+              outline-none transition
+              focus:ring-4 focus:ring-purple-400/30
+              focus:border-purple-400
+            "
               />
             </div>
 
+            {/* Password */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-400 mb-1">
-                Password
+              <label className="block text-xs font-semibold uppercase tracking-wide text-white/90 mb-2">
+                رمز عبور
               </label>
               <input
                 type="password"
@@ -94,52 +111,55 @@ export default function Auth() {
                 onChange={handleChange}
                 placeholder="********"
                 className="
-                  w-full rounded-xl px-4 py-3 text-sm
-                  bg-slate-100 dark:bg-slate-800
-                  border border-slate-200 dark:border-slate-700
-                  text-slate-800 dark:text-white
-                  placeholder:text-slate-400
-                  outline-none transition
-                  focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500
-                "
+              w-full rounded-xl px-4 py-3 text-sm
+              bg-slate-900/50
+              border border-white/30
+              text-white
+              placeholder:text-white/60
+              backdrop-blur-md
+              outline-none transition
+              focus:ring-4 focus:ring-purple-400/30
+              focus:border-purple-400
+            "
               />
             </div>
 
+            {/* Button */}
             <button
               disabled={loading}
               type="submit"
               className={`
-                w-full flex items-center justify-center gap-2
-                rounded-xl py-3 text-sm font-bold text-white
-                transition active:scale-[0.98]
-                ${
-                  loading
-                    ? "bg-slate-400 cursor-not-allowed"
-                    : "bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500/30"
+            w-full flex items-center justify-center gap-2
+            rounded-xl py-3 text-sm font-bold text-white
+            transition active:scale-[0.98]
+            ${loading
+                  ? "bg-white/30 cursor-not-allowed"
+                  : "bg-gradient-to-r from-purple-600 to-orange-500 hover:opacity-90 shadow-lg shadow-purple-900/40"
                 }
-              `}
+          `}
             >
               {loading ? (
-                <>
+                <button>
                   <span className="h-4 w-4 rounded-full border-2 border-white/50 border-t-white animate-spin" />
-                  Authenticating...
-                </>
+                  در حال بررسی
+                </button>
               ) : (
-                "Sign In"
+                "ورود"
               )}
             </button>
 
-            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-2">
-              <span>Admin-only access</span>
+            <div className="flex items-center justify-between text-xs text-white/70 pt-2">
+              <span>ورود مجاز فقط برای ادمین</span>
               <span>v1.0</span>
             </div>
           </form>
         </div>
 
-        <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
-          Contact system administrator if you need access.
+        <p className="mt-4 text-center text-xs text-white/70">
+          برای مجوز ورود با مدیر سیستم تماس بگیرید.
         </p>
       </div>
     </div>
+
   );
 }
