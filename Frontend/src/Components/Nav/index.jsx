@@ -2,103 +2,128 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../Store/Slices/AuthSlice";
+import { MonitorCogIcon, LucideMenuSquare, X } from "lucide-react";
 
 export default function Nav() {
-  const {token}=useSelector(state=>state.auth)
-  const cartCount = useSelector((state) =>
-    state.cart.items.reduce((total, item) => total + (item.cartQuantity || 0), 0),
-  );
-  const dispatch=useDispatch()
-  const [isScrolled, setIsScrolled] =useState(false);
+  const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // run once on mount
-
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
-    <div className={`w-full bg-zinc-950 border-b border-zinc-800/50 backdrop-blur-3xl  sticky top-0 z-50 transition-shadow duration-300
-      ${isScrolled ? "shadow-none" : "shadow-violet-800 shadow-xl"}`}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Modern Gradient Logo */}
-        <h2 className="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-fuchsia-500 hover:opacity-80 transition-opacity">
-          MY WEBSITE
-        </h2>
+    <div
+      className={`relative w-full transition-all duration-300 ${isScrolled
+          ? "bg-slate-900/80 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.35)]"
+          : "bg-slate-900/50 backdrop-blur-xl"
+        }`}
+    >
+      <div className="mx-auto flex items-center justify-between gap-3 px-4 py-4 sm:px-6">
 
-        {/* Navigation Menu */}
-        <ul className="flex items-center gap-8 text-sm font-medium">
+        {/* LEFT SECTION */}
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-700 to-orange-500 flex items-center justify-center shadow-lg shadow-purple-900/40">
+            <MonitorCogIcon className="h-6 w-6 text-white" />
+          </div>
+
+          <div className="flex flex-col leading-tight">
+            <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white">
+              داشبورد مدیریت
+            </h2>
+            <p className="text-xs text-white/60 font-medium">
+              مدیریت
+            </p>
+          </div>
+        </div>
+
+        {/* DESKTOP MENU */}
+        <ul className="hidden sm:flex items-center gap-3 transition-all">
           <li>
             <Link
-              to={"/"}
-              className="text-zinc-400 hover:text-white transition-colors duration-200"
+              to="/dashboard"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-200/90 transition hover:bg-white/10 hover:text-white"
             >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/about"}
-              className="text-zinc-400 hover:text-white transition-colors duration-200"
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/products"}
-              className="text-zinc-400 hover:text-white transition-colors duration-200"
-            >
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/cart"}
-              className="text-zinc-400 hover:text-white transition-colors duration-200"
-            >
-              Cart
-              {cartCount > 0 && (
-                <span className="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[10px] bg-zinc-800 text-zinc-200">
-                  {cartCount}
-                </span>
-              )}
+              خانه
             </Link>
           </li>
 
-          {/* Auth Section Logic */}
-          <li className="flex items-center gap-4 ml-4">
+          <li>
             {token ? (
-              <Link
-                to={"/profile"}
-                className="px-4 py-2 rounded-full border border-zinc-700 text-zinc-200 hover:bg-zinc-800 hover:border-zinc-600 transition-all shadow-sm"
+              <button
+                onClick={() => dispatch(logout())}
+                className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:text-red-400 hover:border-red-400 hover:bg-white/10"
               >
-                Profile
-              </Link>
+                خروج
+              </button>
             ) : (
               <Link
-                to={"/auth"}
-                className="px-5 py-2 rounded-full bg-violet-600 text-white hover:bg-violet-500 shadow-lg shadow-violet-900/20 transition-all active:scale-95"
+                to="/auth"
+                className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/10"
               >
-                Login/Register
+                ورود
               </Link>
             )}
+          </li>
+        </ul>
 
-            {token && (
+        {/* MOBILE HAMBURGER */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="sm:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-all"
+        >
+          {isOpen ? <X size={22} /> : <LucideMenuSquare size={22} />}
+        </button>
+      </div>
+
+      {/* MOBILE DROPDOWN MENU */}
+
+      <div className={`
+    sm:hidden px-4 overflow-hidden transition-all duration-300 ease-in-out
+    ${isOpen ? "max-h-60 opacity-100 pb-4" : "max-h-0 opacity-0"}
+  `}>
+        <ul className="flex flex-col gap-2 rounded-xl bg-slate-900/80 backdrop-blur-xl border border-white/10 p-3 shadow-lg">
+          <li>
+            <Link
+              to="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-lg px-3 py-2 text-sm text-slate-200 hover:bg-white/10"
+            >
+              خانه
+            </Link>
+          </li>
+
+          <li>
+            {token ? (
               <button
-                onClick={() =>dispatch(logout()) }
-                className="text-xs font-bold uppercase tracking-widest text-zinc-500 hover:text-rose-400 transition-colors"
+                onClick={() => {
+                  dispatch(logout());
+                  setIsOpen(false);
+                }}
+                className="w-full text-right rounded-lg px-3 py-2 text-sm text-slate-200 hover:bg-white/10 hover:text-red-400"
               >
-                Logout
+                خروج
               </button>
+            ) : (
+              <Link
+                to="/auth"
+                onClick={() => setIsOpen(false)}
+                className="block rounded-lg px-3 py-2 text-sm text-slate-200 hover:bg-white/10"
+              >
+                ورود
+              </Link>
             )}
           </li>
         </ul>
       </div>
+
     </div>
   );
 }
+
