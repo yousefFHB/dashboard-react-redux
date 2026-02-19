@@ -11,7 +11,7 @@ export default function Loading() {
       <div className="absolute inset-0 m-auto w-12 h-12 bg-violet-500/20 rounded-full animate-pulse"></div>
 
 
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950"></div></div>
+      <div className="fixed inset-0 z-100 flex items-center justify-center bg-zinc-950"></div></div>
     </>
 
 

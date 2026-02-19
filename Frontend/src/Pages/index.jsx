@@ -8,6 +8,10 @@ import CreateProducts from "./Products/CreateProducts";
 import UpdateProducts from "./Products/UpdateProducts";
 import GetAllProducts from "./Products/GetAllProducts";
 import Products from "./Products";
+import Category from "./Category";
+import GetAllCategory from "./Category/GetAllCategory";
+import CreateCategory from "./Category/CreateCategory";
+import UpdateCategory from "./Category/UpdateCategory";
 export {
-    Auth,Home,CreateBrand,UpdateBrands,GetAllBrands,Brands,CreateProducts,UpdateProducts,Products,GetAllProducts
+    Auth,Home,CreateBrand,UpdateBrands,GetAllBrands,Brands,CreateProducts,UpdateProducts,Products,GetAllProducts,Category,GetAllCategory,CreateCategory,UpdateCategory
 };

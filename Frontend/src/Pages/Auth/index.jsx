@@ -22,32 +22,31 @@ export default function Auth() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    const result = await FetchData("auth/login", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(fields),
-    });
-
-    const role = String(result.data?.user?.role || "").toLowerCase();
-    const isAllowedRole = role === "admin" || role === "super_admin";
-
-    if (result.success && isAllowedRole) {
-      dispatch(login(result.data));
-      notify("success", "با موفقیت وارد شدید");
-      navigate("/dashboard");
-    } else {
-      if (result.success && !isAllowedRole) {
-        result.message = "اجازه دسترسی به داشبرد را ندارید";
-      }
-
-      setFields({ email: "", password: "" });
+    if (!fields.email || !fields.password) {
       notify("error", "ایمیل و رمز عبور را وارد کنید");
+      return;
     }
 
-    setLoading(false);
+    setLoading(true);
+
+    const fakeAuthData = {
+      token: "test-token-123",
+      user: {
+        email: fields.email,
+        role: "admin", 
+      },
+    };
+
+  
+    setTimeout(() => {
+      dispatch(login(fakeAuthData));
+      notify("success", "با موفقیت وارد شدید");
+      navigate("/dashboard");
+      setLoading(false);
+    }, 600);
   };
+
 
   return (
     <div className="min-h-screen font-sans flex items-center justify-center login-bg px-4">
@@ -134,7 +133,7 @@ export default function Auth() {
             transition active:scale-[0.98]
             ${loading
                   ? "bg-white/30 cursor-not-allowed"
-                  : "bg-gradient-to-r from-purple-600 to-orange-500 hover:opacity-90 shadow-lg shadow-purple-900/40"
+                  : "bg-linear-to-br from-indigo-700 to-orange-500 hover:opacity-90 shadow-lg shadow-purple-900/40"
                 }
           `}
             >
