@@ -18,7 +18,7 @@ export default function Brands() {
 
   const handleDelete = (id) => {
     dispatch(deleteBrand(id));
-    notify("success", "Brand removed successfully");
+    notify("success", "برند با موفقیت حذف شد");
   };
 
   return (
@@ -137,16 +137,16 @@ export default function Brands() {
           </section>
         ) : (
           <section className="rounded-xl border border-dashed border-white/20 bg-white/5 px-5 py-10 text-center">
-            <h3 className="text-lg font-semibold text-white">No brands yet</h3>
+            <h3 className="text-lg font-semibold text-white">برندی وجود ندارد</h3>
             <p className="mt-1 text-sm text-slate-300">
-              Create your first brand to start building your catalog.
+             برند خود را درست کنید 
             </p>
             <Link
               to="/dashboard/brands/create"
               className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm text-white hover:bg-white/15"
             >
               <Plus size={16} />
-              Create Brand
+              ساخت برند
             </Link>
           </section>
         )

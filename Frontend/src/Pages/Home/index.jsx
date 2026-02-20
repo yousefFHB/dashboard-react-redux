@@ -9,7 +9,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { performanceData, revenueData } from "../../data/data";
+import {
+  performanceData,
+  revenueData,
+  trafficSources,
+  userData,
+} from "../../data/data";
 import MetricCard from "./MetricCard";
 
 const totals = revenueData.reduce(
@@ -22,6 +27,7 @@ const totals = revenueData.reduce(
 );
 
 const avgGrowth = (totals.growth / revenueData.length).toFixed(1);
+const maxUserOrders = Math.max(...userData.map((user) => user.orders), 1);
 
 export default function Home() {
   return (
@@ -42,7 +48,7 @@ export default function Home() {
           change={18.1}
           icon={UserSquare2Icon}
           gradient="from-orange-300 to-orange-600"
-          subtitle="فعال در ماه"
+          subtitle="فعال در ماه جاری"
           trend={[45, 52, 48, 80, 55, 44]}
         />
         <MetricCard
@@ -145,6 +151,70 @@ export default function Home() {
             </AreaChart>
           </ResponsiveContainer>
         </div>
+      </section>
+
+      <section className=" grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <article className=" rounded-xl border border-white/10 bg-white/5 p-4">
+          <h3 className="mb-4 text-lg font-semibold text-white">منابع ترافیک</h3>
+          <div className="space-y-3">
+            {trafficSources.map((source) => {
+              const Icon = source.icon;
+              return (
+                <div key={source.name} className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="mb-2 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg"
+                        style={{ backgroundColor: `${source.color}22` }}
+                      >
+                        <Icon size={16} style={{ color: source.color }} />
+                      </span>
+                      <span className="text-sm font-medium text-slate-100">{source.name}</span>
+                    </div>
+                    <span className="text-sm font-semibold text-white">{source.value}%</span>
+                  </div>
+
+                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${source.value}%`, backgroundColor: source.color }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </article>
+
+        <article className="overflow-y-scroll rounded-xl border border-white/10 bg-white/5 p-4">
+          <h3 className="mb-4 text-lg font-semibold text-white">فعالیت‌های زنده</h3>
+          <div className="space-y-3">
+            {userData
+              .slice()
+              .sort((a, b) => b.orders - a.orders)
+              .map((user) => (
+                <div key={user.id} className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-100">{user.name}</p>
+                      <p className="text-xs text-slate-300">{user.email}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-emerald-300">{user.orders} سفارش</p>
+                      <p className="text-xs text-slate-300">{user.role}</p>
+                    </div>
+                  </div>
+
+                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                    <div
+                      className="h-full rounded-full bg-linear-to-r from-emerald-400 to-cyan-400"
+                      style={{ width: `${(user.orders / maxUserOrders) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+          </div>
+        </article>
       </section>
 
       <section className="rounded-xl border border-white/10 bg-white/5 p-4">

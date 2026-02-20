@@ -5,11 +5,10 @@ import { Menu, MonitorCogIcon } from "lucide-react";
 import { logout } from "../../Store/Slices/AuthSlice";
 
 function getPageTitle(pathname) {
-  if (pathname === "/dashboard") return "Dashboard";
-  if (pathname.startsWith("/dashboard/brands")) return "Brands";
-  if (pathname.startsWith("/dashboard/products")) return "Products";
-  if (pathname.startsWith("/dashboard/categories")) return "Categories";
-  if (pathname.startsWith("/dashboard/users")) return "Users";
+  if (pathname === "/dashboard") return "داشبرد";
+  if (pathname.startsWith("/dashboard/brands")) return "برند ها";
+  if (pathname.startsWith("/dashboard/products")) return "محصولات";
+  if (pathname.startsWith("/dashboard/category")) return "دسته بندی";
 
   const lastSegment = pathname.split("/").filter(Boolean).pop();
   if (!lastSegment) return "Dashboard";
@@ -74,7 +73,7 @@ export default function Nav({ onToggleSidebar, isSidebarOpen }) {
             <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white">
               {pageTitle}
             </h2>
-            <p className="text-xs font-medium text-white/60">Management Panel</p>
+            <p className="text-xs font-medium text-white/60">پنل مدیریت </p>
           </div>
         </div>
 

@@ -64,10 +64,10 @@ export default function CreateBrand() {
   return (
     <div className="max-w-3xl mx-auto py-6 sm:py-8 px-1 sm:px-2">
       <div className="mb-6 text-center sm:text-left">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <h2 dir="rtl" className=" text-2xl sm:text-3xl text-right font-extrabold text-white tracking-tight">
           ایجاد برند
         </h2>
-        <p className="mt-2 text-sm text-slate-300">
+        <p className="mt-2 text-right text-sm text-slate-300">
           یک برند جدید اضافه کنید و وضعیت نمایش آن را مدیریت کنید.
         </p>
       </div>
@@ -107,10 +107,9 @@ export default function CreateBrand() {
             className={`
               relative flex flex-col items-center justify-center gap-4
               rounded-xl border-2 border-dashed
-              ${
-                img
-                  ? "border-slate-400/70 bg-white/10"
-                  : "border-white/25 bg-white/5 hover:bg-white/10"
+              ${img
+                ? "border-slate-400/70 bg-white/10"
+                : "border-white/25 bg-white/5 hover:bg-white/10"
               }
               p-8 cursor-pointer transition-all duration-200 group
             `}
@@ -211,10 +210,9 @@ export default function CreateBrand() {
               text-sm font-bold text-white shadow-lg shadow-slate-900/20
               flex items-center justify-center gap-2
               transition-all duration-200
-              ${
-                loading
-                  ? "bg-slate-500 cursor-not-allowed"
-                  : "bg-linear-to-r from-indigo-600 to-orange-500 hover:opacity-90 hover:-translate-y-0.5"
+              ${loading
+                ? "bg-slate-500 cursor-not-allowed"
+                : "bg-linear-to-r from-indigo-600 to-orange-500 hover:opacity-90 hover:-translate-y-0.5"
               }
             `}
           >
