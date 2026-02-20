@@ -94,15 +94,15 @@ export default function Nav({ onToggleSidebar, isSidebarOpen }) {
           </div>
 
           <div className="relative hidden md:flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.07] px-3 py-2 backdrop-blur-2xl shadow-[0_12px_30px_rgba(2,6,23,0.45)]">
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-white/[0.12] via-transparent to-white/[0.04]" />
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-r from-white/12 via-transparent to-white/4" />
 
-            <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-400 flex items-center justify-center text-slate-900 text-sm font-extrabold shadow-[0_8px_20px_rgba(15,23,42,0.35)]">
+            <div className="relative h-10 w-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-400 flex items-center justify-center text-slate-900 text-sm font-extrabold shadow-[0_8px_20px_rgba(15,23,42,0.35)]">
               {user?.email ? user.email[0].toUpperCase() : "A"}
             </div>
 
             <div className="relative flex flex-col leading-tight">
               <p className="text-sm font-semibold text-white">Admin User</p>
-              <p className="max-w-[180px] truncate text-xs text-slate-200/80 font-medium">
+              <p className="max-w-45 truncate text-xs text-slate-200/80 font-medium">
                 {user?.email || "No email"}
               </p>
             </div>

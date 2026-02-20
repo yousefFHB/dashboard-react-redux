@@ -1,5 +1,16 @@
 import React from "react";
+import { DollarSignIcon, Target, UserSquare2Icon } from "lucide-react";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { performanceData, revenueData } from "../../data/data";
+import MetricCard from "./MetricCard";
 
 const totals = revenueData.reduce(
   (acc, item) => {
@@ -16,6 +27,36 @@ export default function Home() {
   return (
     <div className="space-y-6">
       <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <MetricCard
+          title="کل درآمد"
+          value="2.4M"
+          change={32.1}
+          icon={DollarSignIcon}
+          gradient="from-green-300 to-green-600"
+          subtitle="ماه گذشته"
+          trend={[45, 52, 48, 61, 55, 67]}
+        />
+        <MetricCard
+          title="کاربران فعال"
+          value="62.1K"
+          change={18.1}
+          icon={UserSquare2Icon}
+          gradient="from-orange-300 to-orange-600"
+          subtitle="فعال در ماه"
+          trend={[45, 52, 48, 80, 55, 44]}
+        />
+        <MetricCard
+          title="نرخ بازگشت"
+          value="12.8%"
+          change={25.4}
+          icon={Target}
+          gradient="from-indigo-300 to-indigo-600"
+          subtitle="۳۰ روز گذشته"
+          trend={[28, 52, 35, 61, 34, 67]}
+        />
+      </section>
+
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <article className="rounded-xl border border-white/10 bg-white/5 p-4">
           <p className="text-xs text-slate-300">کل درآمد</p>
           <h2 className="mt-2 text-2xl font-bold text-white">
@@ -27,7 +68,7 @@ export default function Home() {
           <h2 className="mt-2 text-2xl font-bold text-emerald-300">{avgGrowth}%</h2>
         </article>
         <article className="rounded-xl border border-white/10 bg-white/5 p-4">
-          <p className="text-xs text-slate-300">بهترین محصول</p>
+          <p className="text-xs text-slate-300">محصول برتر</p>
           <h2 className="mt-2 text-2xl font-bold text-white">{revenueData[0].name}</h2>
         </article>
       </section>
@@ -57,6 +98,56 @@ export default function Home() {
       </section>
 
       <section className="rounded-xl border border-white/10 bg-white/5 p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-white">نمودار ناحیه‌ای درآمد</h3>
+          <span className="text-xs text-slate-300">منبع: revenueData</span>
+        </div>
+
+        <div className="h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={revenueData} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#60a5fa" stopOpacity={0.45} />
+                  <stop offset="95%" stopColor="#60a5fa" stopOpacity={0.03} />
+                </linearGradient>
+              </defs>
+
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.25)" />
+              <XAxis
+                dataKey="name"
+                tick={{ fill: "#cbd5e1", fontSize: 11 }}
+                tickLine={false}
+                axisLine={false}
+                interval={0}
+                angle={-15}
+                textAnchor="end"
+                height={60}
+              />
+              <YAxis
+                tick={{ fill: "#cbd5e1", fontSize: 11 }}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `$${value / 1000}k`}
+              />
+              <Tooltip
+                formatter={(value) => [`$${Number(value).toLocaleString()}`, "درآمد"]}
+                labelStyle={{ color: "#0f172a", fontWeight: 600 }}
+              />
+              <Area
+                type="monotone"
+                dataKey="revenue"
+                stroke="#60a5fa"
+                strokeWidth={2}
+                fill="url(#revenueFill)"
+                activeDot={{ r: 5 }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </section>
+
+      <section className="rounded-xl border border-white/10 bg-white/5 p-4">
         <h3 className="mb-4 text-lg font-semibold text-white">داده‌های عملکرد</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
@@ -64,7 +155,7 @@ export default function Home() {
               <tr className="border-b border-white/10">
                 <th className="px-3 py-2">ماه</th>
                 <th className="px-3 py-2">سفارش‌ها</th>
-                <th className="px-3 py-2">تبدیل</th>
+                <th className="px-3 py-2">نرخ تبدیل</th>
                 <th className="px-3 py-2">میانگین ارزش سفارش</th>
               </tr>
             </thead>

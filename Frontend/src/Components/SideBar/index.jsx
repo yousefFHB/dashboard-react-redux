@@ -17,10 +17,10 @@ export default function SideBar({ onNavigate }) {
       <div className="relative mb-4 rounded-xl px-3 py-2 overflow-hidden group">
   
   {/* Base Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-tl from-indigo-700 to-orange-500 transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
+  <div className="absolute inset-0 bg-linear-to-tl from-indigo-700 to-orange-500 transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
   
   {/* Inverted Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-tl from-orange-500 to-indigo-700 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" />
+  <div className="absolute inset-0 bg-linear-to-tl from-orange-500 to-indigo-700 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" />
   
   {/* Content */}
   <div className="relative ">

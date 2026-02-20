@@ -27,7 +27,7 @@ export default function Layout() {
         />
       </header>
 
-      <div className="relative mx-auto w-full max-w-[1600px] px-3 py-6 sm:px-4 lg:px-6">
+      <div className="relative mx-auto w-full max-w-400 px-3 py-6 sm:px-4 lg:px-6">
         <div
           onClick={() => setIsSidebarOpen(false)}
           className={`fixed inset-0 z-40 bg-black/45 backdrop-blur-sm transition lg:hidden ${
