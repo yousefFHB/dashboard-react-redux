@@ -160,14 +160,14 @@ export default function Home() {
             {trafficSources.map((source) => {
               const Icon = source.icon;
               return (
-                <div key={source.name} className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div key={source.name} className= "group hover:bg-white/10  rounded-xl border border-white/10 bg-white/5 p-3 transition-all">
                   <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg"
+                        className="inline-flex group-hover:scale-110 transition-all h-8 w-8 items-center justify-center rounded-lg"
                         style={{ backgroundColor: `${source.color}22` }}
                       >
-                        <Icon size={16} style={{ color: source.color }} />
+                        <Icon  size={16} style={{ color: source.color }} />
                       </span>
                       <span className="text-sm font-medium text-slate-100">{source.name}</span>
                     </div>
@@ -193,7 +193,7 @@ export default function Home() {
               .slice()
               .sort((a, b) => b.orders - a.orders)
               .map((user) => (
-                <div key={user.id} className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div key={user.id} className="hover:scale-105 transition-all hover:bg-white/15 rounded-xl border border-white/10 bg-white/5 p-3">
                   <div className="mb-2 flex items-center justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold text-slate-100">{user.name}</p>

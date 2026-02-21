@@ -38,6 +38,7 @@ export default function Brands() {
           <Plus size={16} />
           ساخت برند
         </Link>
+        
       </div>
 
       <div className="flex items-center gap-2 border-b border-white/10 pb-3">
@@ -61,6 +62,16 @@ export default function Brands() {
           }
         >
           ساختن
+        </NavLink>
+         <NavLink
+          to="/dashboard/brands/update"
+          className={({ isActive }) =>
+            `rounded-lg px-3 py-1.5 text-sm transition ${
+              isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
+            }`
+          }
+        >
+        ویرایش
         </NavLink>
       </div>
 
@@ -113,7 +124,7 @@ export default function Brands() {
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={() => navigate("/dashboard/brands/update")}
+                            onClick={() => navigate("/dashboard/brands/update", { state: { brandId: brand.id } })}
                             className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-200 hover:bg-white/10"
                           >
                             <Pencil size={14} />
