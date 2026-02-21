@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, Outlet, useMatch, useNavigate } from "react-router-dom";
-import { PackagePlus, Pencil, Star, Trash2 } from "lucide-react";
+import { Link, NavLink, Outlet, useMatch } from "react-router-dom";
+import { PackagePlus } from "lucide-react";
 import Loading from "../../Components/Loading";
 import notify from "../../Utils/Notify";
 import { deleteProduct, setProducts } from "../../Store/Slices/ProductSlice";
+import Card from "./Card";
 
 export default function Products() {
-  const { product: products } = useSelector((state) => state.product);
+  const { product: products, fetched } = useSelector((state) => state.product);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export default function Products() {
   const shouldShowList = onProductsIndex && !onCreatePage && !onUpdatePage;
 
   useEffect(() => {
-    if (!shouldShowList || products.length > 0) return;
+    if (!shouldShowList || fetched) return;
 
     const fetchProducts = async () => {
       try {
@@ -30,80 +30,42 @@ export default function Products() {
 
         const data = await res.json();
         dispatch(setProducts(data));
-        notify("success", "با موفقیت داده ارسال شد");
+        notify("success", "محصولات با موفقیت دریافت شدند");
       } catch (error) {
-        notify("error", "مشکلی در ارسال داده");
+        notify("error", "خطا در دریافت داده‌ها");
       } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [dispatch, products.length, shouldShowList]);
+  }, [dispatch, fetched, shouldShowList]);
 
   const handleDelete = (id) => {
     dispatch(deleteProduct(id));
-    notify("success", "محصول مدنظر حذف شد");
+    notify("success", "محصول با موفقیت حذف شد");
   };
+
   const items = products.map((item) => (
-    <article
+    <Card
       key={item.id}
-      className="group hover:bg-white/10  overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300"
-    >
-      <div className="h-44 bg-white/10 p-4">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="h-full group-hover:scale-105 w-full object-contain transition-all duration-300"
-        />
-      </div>
-
-      <div className="space-y-3 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="line-clamp-2 text-sm font-semibold text-white">{item.title}</h3>
-          <span className="shrink-0 rounded-full bg-indigo-500/20 px-2 py-1 text-[11px] font-semibold text-indigo-200">
-            {item.category}
-          </span>
-        </div>
-
-        <p className="line-clamp-2 text-xs text-slate-300">{item.description}</p>
-
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-bold text-emerald-300">${item.price}</span>
-          <span className="inline-flex items-center gap-1 text-amber-300">
-            <Star size={14} className="fill-amber-300" />
-            {item.rating?.rate ?? "-"}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-end gap-2 border-t border-white/10 pt-3">
-          <button
-            type="button"
-            onClick={() => navigate("/dashboard/products/update", { state: { productId: item.id } })}
-            className="inline-flex  items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-200 hover:bg-white/20"
-          >
-            <Pencil size={14} />
-            ویرایش
-          </button>
-          <button
-            type="button"
-            onClick={() => handleDelete(item.id)}
-            className="inline-flex items-center gap-1 rounded-lg border border-red-400/20 bg-red-500/10 px-3 py-1.5 text-xs text-red-300 hover:bg-red-500/30"
-          >
-            <Trash2 size={14} />
-            حذف
-          </button>
-        </div>
-      </div>
-    </article>
-  ))
+      handleDelete={handleDelete}
+      rating={item.rating}
+      id={item.id}
+      title={item.title}
+      price={item.price}
+      category={item.category}
+      description={item.description}
+      image={item.image}
+    />
+  ));
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" dir="rtl">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-white">محصولات</h1>
-          <p className="text-sm text-slate-300">تمامی محصولات را بررسی کنید</p>
+          <p className="text-sm text-slate-300">تمامی محصولات را بررسی و مدیریت کنید</p>
         </div>
 
         <Link
@@ -120,7 +82,8 @@ export default function Products() {
           end
           to="/dashboard/products"
           className={({ isActive }) =>
-            `rounded-lg px-3 py-1.5 text-sm transition ${isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
+            `rounded-lg px-3 py-1.5 text-sm transition ${
+              isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
             }`
           }
         >
@@ -129,7 +92,8 @@ export default function Products() {
         <NavLink
           to="/dashboard/products/create"
           className={({ isActive }) =>
-            `rounded-lg px-3 py-1.5 text-sm transition ${isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
+            `rounded-lg px-3 py-1.5 text-sm transition ${
+              isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
             }`
           }
         >
@@ -138,7 +102,8 @@ export default function Products() {
         <NavLink
           to="/dashboard/products/update"
           className={({ isActive }) =>
-            `rounded-lg px-3 py-1.5 text-sm transition ${isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
+            `rounded-lg px-3 py-1.5 text-sm transition ${
+              isActive ? "bg-white/15 text-white" : "text-slate-300 hover:bg-white/10"
             }`
           }
         >
@@ -148,17 +113,17 @@ export default function Products() {
 
       {shouldShowList ? (
         loading ? (
-          <div className="min-h-[280px] flex items-center justify-center">
+          <div className="min-h-70 flex items-center justify-center">
             <Loading />
           </div>
         ) : products.length ? (
-          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3" dir="ltr">
             {items}
           </section>
         ) : (
           <section className="rounded-xl border border-dashed border-white/20 bg-white/5 px-5 py-10 text-center">
             <h3 className="text-lg font-semibold text-white">محصولی موجود نیست</h3>
-            <p className="mt-1 text-sm text-slate-300">محصول خود را درست کنید</p>
+            <p className="mt-1 text-sm text-slate-300">در حال حاضر محصولی برای نمایش وجود ندارد</p>
           </section>
         )
       ) : (

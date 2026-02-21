@@ -219,7 +219,7 @@ export default function UpdateBrands() {
               checked={isPublished}
               onChange={(e) => setIsPublished(e.target.checked)}
             />
-            <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+            <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
           </label>
         </div>
 
@@ -241,7 +241,7 @@ export default function UpdateBrands() {
             disabled={loading}
             type="submit"
             className={`
-              min-w-[120px] px-6 py-2.5 rounded-xl
+              min-w-30 px-6 py-2.5 rounded-xl
               text-sm font-bold text-white shadow-lg shadow-slate-900/20
               flex items-center justify-center gap-2
               transition-all duration-200

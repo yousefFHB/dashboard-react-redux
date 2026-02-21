@@ -79,7 +79,7 @@ export default function Brands() {
         brands.length > 0 ? (
           <section className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[700px] text-left text-sm">
+              <table className="w-full min-w-175 text-left text-sm">
                 <thead className="bg-white/5 text-slate-300">
                   <tr className="border-b border-white/10">
                     <th className="px-4 py-3">لوگو</th>
