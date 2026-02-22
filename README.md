@@ -7,6 +7,10 @@ This repository currently contains two applications:
 - `Frontend`: Dashboard UI, authentication screen, and CRUD-style management pages.
 - `blog-tutorials/node-api-jwt-auth`: Backend API for authentication and user management.
 
+## Homepage Preview
+
+![Homepage preview](Frontend/src/assests/Images/Home-page.png)
+
 ## What Has Been Implemented
 
 ### Frontend (`Frontend`)
